@@ -14,80 +14,78 @@ class Loginpage extends StatefulWidget {
 class _MyWidgetState extends State<Loginpage> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: const Color.fromARGB(255, 112, 110, 108),
-        //   centerTitle: true,
-        //   title: Text(
-        //     "Login Page",
-        //     style: TextStyle(
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        // ),
-        body: Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 13),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          // ignore: prefer_const_literals_to_create_immutables
-          children: [
-            Text(
-              "Your Fitness",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 50,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB(255, 127, 216, 238), // Light blue
+              Color.fromARGB(255, 127, 238, 164) // Light greenish-blue
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 13),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Your Fitness",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 50,
+                ),
               ),
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            FormContainerWidget(
-              controller: _emailController,
-              hintText: "Email",
-              isPasswordField: false,
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            FormContainerWidget(
-              controller: _passwordController,
-              hintText: "Password",
-              isPasswordField: true,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.pushAndRemoveUntil(
+              SizedBox(height: 30),
+              FormContainerWidget(
+                controller: _emailController,
+                hintText: "Email",
+                isPasswordField: false,
+              ),
+              SizedBox(height: 20),
+              FormContainerWidget(
+                controller: _passwordController,
+                hintText: "Password",
+                isPasswordField: true,
+              ),
+              SizedBox(height: 25),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => Hamepage()),
-                    (route) => false);
-              },
-              child: Container(
-                width: double.infinity,
-                height: 45,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 51, 185, 96),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Text(
-                    "Login",
-                    style: TextStyle(
+                    (route) => false,
+                  );
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 0, 0, 0),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
                         color: const Color.fromARGB(255, 255, 255, 255),
                         fontWeight: FontWeight.bold,
-                        fontSize: 17),
+                        fontSize: 17,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 }
