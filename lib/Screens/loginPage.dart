@@ -42,7 +42,7 @@ class _MyWidgetState extends State<Loginpage> {
               ),
             ),
             SizedBox(
-              height: 30,
+              height: 40,
             ),
             FormContainerWidget(
               controller: _emailController,
@@ -50,7 +50,7 @@ class _MyWidgetState extends State<Loginpage> {
               isPasswordField: false,
             ),
             SizedBox(
-              height: 10,
+              height: 30,
             ),
             FormContainerWidget(
               controller: _passwordController,
@@ -58,7 +58,7 @@ class _MyWidgetState extends State<Loginpage> {
               isPasswordField: true,
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
             GestureDetector(
               onTap: () {
@@ -71,14 +71,14 @@ class _MyWidgetState extends State<Loginpage> {
                 width: double.infinity,
                 height: 45,
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 112, 110, 108),
+                  color: const Color.fromARGB(255, 51, 185, 96),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Center(
                   child: Text(
                     "Login",
                     style: TextStyle(
-                        color: Colors.black,
+                        color: const Color.fromARGB(255, 255, 255, 255),
                         fontWeight: FontWeight.bold,
                         fontSize: 17),
                   ),
