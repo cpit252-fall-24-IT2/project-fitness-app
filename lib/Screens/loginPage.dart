@@ -22,7 +22,7 @@ class _MyWidgetState extends State<Loginpage> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
+            colors: const [
               Color.fromARGB(255, 0, 0, 0),
               Color.fromARGB(255, 9, 20, 22),
               Color.fromARGB(255, 40, 80, 90),
@@ -85,6 +85,39 @@ class _MyWidgetState extends State<Loginpage> {
                     ),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't have an account?",
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => SignupPage()),
+                          (route) => false);
+                    },
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(
+                          color: const Color.fromARGB(255, 0, 0, 0),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
