@@ -82,6 +82,22 @@ class _SignUpPageState extends State<SignupPage>
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _navigateToLoginPage() {
+    _controller.stop();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Loginpage()),
+    ).then((_) {
+      _controller.repeat();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnimatedBuilder(
@@ -93,8 +109,8 @@ class _SignUpPageState extends State<SignupPage>
                 Color.fromARGB(255, 0, 0, 0),
                 Color.fromARGB(255, 9, 20, 22),
                 Color.fromARGB(255, 40, 80, 90),
-                Color.fromARGB(255, 75, 136, 151), // Light blue
-                Color.fromARGB(255, 127, 238, 164) // Light greenish-blue
+                Color.fromARGB(255, 75, 136, 151),
+                Color.fromARGB(255, 127, 238, 164)
               ],
               begin: _topAlignmentAnimation.value,
               end: _bottomAlignmentAnimation.value,

@@ -81,6 +81,22 @@ class _MyWidgetState extends State<Loginpage>
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _navigateToSignupPage() {
+    _controller.stop(); 
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SignupPage()),
+    ).then((_) {
+      _controller.repeat();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnimatedBuilder(
