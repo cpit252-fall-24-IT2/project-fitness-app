@@ -25,7 +25,7 @@ class _MyWidgetState extends State<Loginpage> {
               Color.fromARGB(255, 0, 0, 0),
               Color.fromARGB(255, 9, 20, 22),
               Color.fromARGB(255, 40, 80, 90),
-              Color.fromARGB(255, 93, 168, 187), // Light blue
+              Color.fromARGB(255, 75, 136, 151), // Light blue
               Color.fromARGB(255, 127, 238, 164) // Light greenish-blue
             ],
             begin: Alignment.topLeft,
