@@ -22,7 +22,10 @@ class _MyWidgetState extends State<Loginpage> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color.fromARGB(255, 127, 216, 238), // Light blue
+              Color.fromARGB(255, 0, 0, 0),
+              Color.fromARGB(255, 9, 20, 22),
+              Color.fromARGB(255, 40, 80, 90),
+              Color.fromARGB(255, 93, 168, 187), // Light blue
               Color.fromARGB(255, 127, 238, 164) // Light greenish-blue
             ],
             begin: Alignment.topLeft,
@@ -42,7 +45,7 @@ class _MyWidgetState extends State<Loginpage> {
                   fontSize: 50,
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 50),
               FormContainerWidget(
                 controller: _emailController,
                 hintText: "Email",
