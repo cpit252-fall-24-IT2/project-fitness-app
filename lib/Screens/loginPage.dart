@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:fitness_app/Screens/SignupPage.dart';
 import 'package:fitness_app/form_container_widget.dart';
 import 'package:fitness_app/Screens/hamePage.dart';
 import 'package:flutter/material.dart';
