@@ -34,14 +34,13 @@ class _MyWidgetState extends State<Homepage> {
     return Scaffold(
         body: _pages[_currentIndex],
         bottomNavigationBar: Container(
-          color: const Color.fromARGB(255, 255, 255, 255),
+          color: const Color.fromARGB(255, 0, 0, 0),
           child: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 14.0,
-              vertical: 16,
+              horizontal: 3,
+              vertical: 7,
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(38),
               child: GNav(
                   onTabChange: _onItemTapped,
                   color: Colors.white,
@@ -52,7 +51,7 @@ class _MyWidgetState extends State<Homepage> {
                       color: const Color.fromARGB(255, 40, 80, 90), width: 2),
                   curve: Curves.easeInToLinear,
                   duration: Duration(milliseconds: 900),
-                  padding: EdgeInsets.all(25),
+                  padding: EdgeInsets.all(18),
                   backgroundColor: Colors.black,
                   gap: 8,
                   tabs: [

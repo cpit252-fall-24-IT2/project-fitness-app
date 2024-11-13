@@ -8,57 +8,54 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
-  List<String> imageList = ["F1", "F", "F2"];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB(255, 0, 0, 0),
+              Color.fromARGB(255, 9, 20, 22),
+              Color.fromARGB(255, 40, 80, 90),
+              Color.fromARGB(255, 75, 136, 151), // Light blue
+              Color.fromARGB(255, 127, 238, 164) // Light greenish-blue
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 120, // Constrain the height for horizontal scrolling
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: imageList.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: 100,
-                    margin: const EdgeInsets.only(left: 15),
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Image.asset(
-                            "assets/${imageList[index]}.jpg",
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return const Icon(Icons
-                                  .error); // Fallback icon if asset is not found
-                            },
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          imageList[index],
-                          style: const TextStyle(
-                            fontSize: 17,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+            // Header
+            const Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                "Welcome Back, Ready to Crush Your Goals?",
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ),
+
+            // Banner Section
+            Container(
+              height: 200,
+              width: 380,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                image: DecorationImage(
+                  image: AssetImage('assets/F.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+
+            Expanded(
+              child: Center(
+                child: Text("Workout Suggestions Coming Soon!",
+                    style: TextStyle(fontSize: 18, color: Colors.grey)),
               ),
             ),
           ],
