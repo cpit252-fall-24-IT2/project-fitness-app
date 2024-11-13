@@ -1,24 +1,25 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:fitness_app/Screens/goalPage.dart';
-import 'package:fitness_app/Screens/profilePage.dart';
+import 'package:fitness_app/Screens/goalScreen.dart';
+import 'package:fitness_app/Screens/homeScreen.dart';
+import 'package:fitness_app/Screens/profileScreen.dart';
 import 'package:flutter/material.dart';
 
-class Hamepage extends StatefulWidget {
-  const Hamepage({super.key});
+class Homepage extends StatefulWidget {
+  const Homepage({super.key});
 
   @override
-  State<Hamepage> createState() => _MyWidgetState();
+  State<Homepage> createState() => _MyWidgetState();
 }
 
-class _MyWidgetState extends State<Hamepage> {
+class _MyWidgetState extends State<Homepage> {
   int _currentIndex = 0;
 
   // List of pages for each tab
   final List<Widget> _pages = [
-    Center(child: Text("Home Screen")),
-    Goalpage(),
-    Profilepage(),
+    Homescreen(),
+    Goalscreen(),
+    Profilescreen(),
   ];
 
   void _onItemTapped(int index) {

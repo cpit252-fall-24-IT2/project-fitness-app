@@ -2,7 +2,7 @@
 
 import 'package:fitness_app/Auth/SignupPage.dart';
 import 'package:fitness_app/Constant/form_container_widget.dart';
-import 'package:fitness_app/Screens/hamePage.dart';
+import 'package:fitness_app/Screens/homePage.dart';
 import 'package:flutter/material.dart';
 
 class Loginpage extends StatefulWidget {
@@ -145,7 +145,7 @@ class _MyWidgetState extends State<Loginpage>
                   onTap: () {
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => Hamepage()),
+                      MaterialPageRoute(builder: (context) => Homepage()),
                       (route) => false,
                     );
                   },

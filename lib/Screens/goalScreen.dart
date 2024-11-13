@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Goalpage extends StatefulWidget {
-  const Goalpage({super.key});
+class Goalscreen extends StatefulWidget {
+  const Goalscreen({super.key});
 
   @override
-  State<Goalpage> createState() => _MyWidgetState();
+  State<Goalscreen> createState() => _MyWidgetState();
 }
 
-class _MyWidgetState extends State<Goalpage> {
+class _MyWidgetState extends State<Goalscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:fitness_app/Auth/loginPage.dart';
-import 'package:fitness_app/Screens/hamePage.dart';
+import 'package:fitness_app/Screens/homePage.dart';
 import '../Constant/form_container_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -159,7 +159,7 @@ class _SignUpPageState extends State<SignupPage>
                   onTap: () {
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => Hamepage()),
+                      MaterialPageRoute(builder: (context) => Homepage()),
                       (route) => false,
                     );
                   },
