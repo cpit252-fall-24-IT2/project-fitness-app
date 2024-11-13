@@ -25,8 +25,8 @@ class _HomescreenState extends State<Homescreen> {
                 itemBuilder: (context, index) {
                   return Container(
                     width: 100,
-                    margin: EdgeInsets.only(left: 15),
-                    padding: EdgeInsets.symmetric(vertical: 5),
+                    margin: const EdgeInsets.only(left: 15),
+                    padding: const EdgeInsets.symmetric(vertical: 5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -41,7 +41,7 @@ class _HomescreenState extends State<Homescreen> {
                             height: 80,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
-                              return Icon(Icons
+                              return const Icon(Icons
                                   .error); // Fallback icon if asset is not found
                             },
                           ),
@@ -49,7 +49,7 @@ class _HomescreenState extends State<Homescreen> {
                         SizedBox(height: 5),
                         Text(
                           imageList[index],
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 17,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
