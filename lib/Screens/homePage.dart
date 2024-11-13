@@ -37,17 +37,22 @@ class _MyWidgetState extends State<Homepage> {
           color: const Color.fromARGB(255, 255, 255, 255),
           child: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 15.0,
-              vertical: 20,
+              horizontal: 14.0,
+              vertical: 16,
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(38),
               child: GNav(
                   onTabChange: _onItemTapped,
                   color: Colors.white,
                   activeColor: Colors.white,
-                  tabBackgroundColor: Color.fromARGB(83, 157, 244, 186),
-                  padding: EdgeInsets.all(20),
+                  tabBackgroundColor:
+                      Color.fromARGB(83, 157, 244, 186).withOpacity(0.1),
+                  tabActiveBorder: Border.all(
+                      color: const Color.fromARGB(255, 40, 80, 90), width: 2),
+                  curve: Curves.easeInToLinear,
+                  duration: Duration(milliseconds: 900),
+                  padding: EdgeInsets.all(25),
                   backgroundColor: Colors.black,
                   gap: 8,
                   tabs: [
