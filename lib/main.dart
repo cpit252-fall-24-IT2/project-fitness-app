@@ -1,4 +1,4 @@
-import 'package:fitness_app/Screens/loginPage.dart';
+import 'package:fitness_app/Auth/loginPage.dart';
 import 'package:flutter/material.dart';
 
 void main() {

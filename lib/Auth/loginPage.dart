@@ -1,20 +1,19 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors
 
+import 'package:fitness_app/Auth/SignupPage.dart';
+import 'package:fitness_app/Constant/form_container_widget.dart';
 import 'package:fitness_app/Screens/hamePage.dart';
-import 'package:fitness_app/Screens/loginPage.dart';
-import 'package:fitness_app/form_container_widget.dart';
 import 'package:flutter/material.dart';
 
-class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
+class Loginpage extends StatefulWidget {
+  const Loginpage({super.key});
 
   @override
-  State<SignupPage> createState() => _SignUpPageState();
+  State<Loginpage> createState() => _MyWidgetState();
 }
 
-class _SignUpPageState extends State<SignupPage>
+class _MyWidgetState extends State<Loginpage>
     with SingleTickerProviderStateMixin {
-  TextEditingController _usernameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
@@ -87,11 +86,11 @@ class _SignUpPageState extends State<SignupPage>
     super.dispose();
   }
 
-  void _navigateToLoginPage() {
+  void _navigateToSignupPage() {
     _controller.stop();
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Loginpage()),
+      MaterialPageRoute(builder: (context) => SignupPage()),
     ).then((_) {
       _controller.repeat();
     });
@@ -109,8 +108,8 @@ class _SignUpPageState extends State<SignupPage>
                 Color.fromARGB(255, 0, 0, 0),
                 Color.fromARGB(255, 9, 20, 22),
                 Color.fromARGB(255, 40, 80, 90),
-                Color.fromARGB(255, 75, 136, 151),
-                Color.fromARGB(255, 127, 238, 164)
+                Color.fromARGB(255, 75, 136, 151), // Light blue
+                Color.fromARGB(255, 127, 238, 164) // Light greenish-blue
               ],
               begin: _topAlignmentAnimation.value,
               end: _bottomAlignmentAnimation.value,
@@ -122,39 +121,26 @@ class _SignUpPageState extends State<SignupPage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Sign Up",
+                  "Your Fitness",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 50,
-                      color: Colors.white),
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 50,
+                  ),
                 ),
-                SizedBox(
-                  height: 30,
-                ),
-                FormContainerWidget(
-                  controller: _usernameController,
-                  hintText: "Username",
-                  isPasswordField: false,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 50),
                 FormContainerWidget(
                   controller: _emailController,
                   hintText: "Email",
                   isPasswordField: false,
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 20),
                 FormContainerWidget(
                   controller: _passwordController,
                   hintText: "Password",
                   isPasswordField: true,
                 ),
-                SizedBox(
-                  height: 30,
-                ),
+                SizedBox(height: 25),
                 GestureDetector(
                   onTap: () {
                     Navigator.pushAndRemoveUntil(
@@ -172,23 +158,24 @@ class _SignUpPageState extends State<SignupPage>
                     ),
                     child: Center(
                       child: Text(
-                        "Sign Up",
+                        "Login",
                         style: TextStyle(
-                            color: const Color.fromARGB(255, 255, 255, 255),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17),
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                        ),
                       ),
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 15,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Already have an account?",
+                      "Don't have an account?",
                       style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.bold,
@@ -202,11 +189,11 @@ class _SignUpPageState extends State<SignupPage>
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Loginpage()),
+                                builder: (context) => SignupPage()),
                             (route) => false);
                       },
                       child: Text(
-                        "Login",
+                        "Sign Up",
                         style: TextStyle(
                             color: const Color.fromARGB(255, 255, 255, 255),
                             fontWeight: FontWeight.bold,
