@@ -29,9 +29,10 @@ class _HomescreenState extends State<Homescreen> {
           children: [
             // Header
             const Padding(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(30),
               child: Text(
                 "Welcome Back, Ready to Crush Your Goals?",
+                textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -42,7 +43,7 @@ class _HomescreenState extends State<Homescreen> {
             // Banner Section
             Container(
               height: 200,
-              width: 380,
+              width: 340,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 image: DecorationImage(
