@@ -60,10 +60,10 @@ class _MyWidgetState extends State<Homepage> {
                   tabActiveBorder: Border.all(
                       color: const Color.fromARGB(255, 40, 80, 90), width: 2),
                   curve: Curves.easeInToLinear,
-                  duration: Duration(milliseconds: 900),
+                  duration: Duration(milliseconds: 500),
                   padding: EdgeInsets.all(18),
                   backgroundColor: Colors.black,
-                  gap: 8,
+                  gap: 5,
                   tabs: [
                     GButton(
                       icon: Icons.home_outlined,

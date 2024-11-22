@@ -1,9 +1,8 @@
-// ignore_for_file: prefer_const_constructors
-
+import 'package:fitness_app/DB/Database.dart';
+import 'package:flutter/material.dart';
 import 'package:fitness_app/Auth/SignupPage.dart';
 import 'package:fitness_app/Constant/form_container_widget.dart';
 import 'package:fitness_app/Screens/homePage.dart';
-import 'package:flutter/material.dart';
 
 class Loginpage extends StatefulWidget {
   const Loginpage({super.key});
@@ -17,6 +16,39 @@ class _MyWidgetState extends State<Loginpage>
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
+  SqlDb sqlDb = SqlDb(); // Create an instance of SqlDb
+  String? _errorMessage;
+  Future<void> _handleLogin() async {
+    String email = _emailController.text.trim();
+    String password = _passwordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
+      setState(() {
+        _errorMessage = "Please fill in all fields";
+      });
+      return;
+    }
+
+    // Check if email and password match
+    List<Map> response = await sqlDb.readData('''
+      SELECT * FROM User WHERE eamil = "$email" AND password = "$password"
+    ''');
+
+    if (response.isNotEmpty) {
+      // Success: Navigate to homepage
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Homepage()),
+        (route) => false,
+      );
+    } else {
+      // Failure: Show error message
+      setState(() {
+        _errorMessage = "Invalid email or password";
+      });
+    }
+  }
+
   late AnimationController _controller;
   late Animation<Alignment> _topAlignmentAnimation;
   late Animation<Alignment> _bottomAlignmentAnimation;
@@ -27,55 +59,51 @@ class _MyWidgetState extends State<Loginpage>
     _controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 40));
 
-    _topAlignmentAnimation = TweenSequence<Alignment>(
-      [
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-              begin: Alignment.topLeft, end: Alignment.topRight),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-              begin: Alignment.topRight, end: Alignment.bottomRight),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-              begin: Alignment.bottomRight, end: Alignment.bottomLeft),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-              begin: Alignment.bottomLeft, end: Alignment.topLeft),
-          weight: 1,
-        ),
-      ],
-    ).animate(_controller);
+    _topAlignmentAnimation = TweenSequence<Alignment>([
+      TweenSequenceItem<Alignment>(
+        tween:
+            Tween<Alignment>(begin: Alignment.topLeft, end: Alignment.topRight),
+        weight: 1,
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(
+            begin: Alignment.topRight, end: Alignment.bottomRight),
+        weight: 1,
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(
+            begin: Alignment.bottomRight, end: Alignment.bottomLeft),
+        weight: 1,
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(
+            begin: Alignment.bottomLeft, end: Alignment.topLeft),
+        weight: 1,
+      ),
+    ]).animate(_controller);
 
-    _bottomAlignmentAnimation = TweenSequence<Alignment>(
-      [
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-              begin: Alignment.bottomRight, end: Alignment.bottomLeft),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-              begin: Alignment.bottomLeft, end: Alignment.topLeft),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-              begin: Alignment.topLeft, end: Alignment.topRight),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-              begin: Alignment.topRight, end: Alignment.bottomRight),
-          weight: 1,
-        ),
-      ],
-    ).animate(_controller);
+    _bottomAlignmentAnimation = TweenSequence<Alignment>([
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(
+            begin: Alignment.bottomRight, end: Alignment.bottomLeft),
+        weight: 1,
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(
+            begin: Alignment.bottomLeft, end: Alignment.topLeft),
+        weight: 1,
+      ),
+      TweenSequenceItem<Alignment>(
+        tween:
+            Tween<Alignment>(begin: Alignment.topLeft, end: Alignment.topRight),
+        weight: 1,
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(
+            begin: Alignment.topRight, end: Alignment.bottomRight),
+        weight: 1,
+      ),
+    ]).animate(_controller);
 
     _controller.repeat();
   }
@@ -84,16 +112,6 @@ class _MyWidgetState extends State<Loginpage>
   void dispose() {
     _controller.dispose();
     super.dispose();
-  }
-
-  void _navigateToSignupPage() {
-    _controller.stop();
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SignupPage()),
-    ).then((_) {
-      _controller.repeat();
-    });
   }
 
   @override
@@ -140,15 +158,15 @@ class _MyWidgetState extends State<Loginpage>
                   hintText: "Password",
                   isPasswordField: true,
                 ),
+                SizedBox(height: 10),
+                if (_errorMessage != null)
+                  Text(
+                    _errorMessage!,
+                    style: TextStyle(color: Colors.red, fontSize: 14),
+                  ),
                 SizedBox(height: 25),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => Homepage()),
-                      (route) => false,
-                    );
-                  },
+                  onTap: _handleLogin,
                   child: Container(
                     width: double.infinity,
                     height: 45,
@@ -168,9 +186,7 @@ class _MyWidgetState extends State<Loginpage>
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 15,
-                ),
+                SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -181,16 +197,14 @@ class _MyWidgetState extends State<Loginpage>
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
-                    SizedBox(
-                      width: 5,
-                    ),
+                    SizedBox(width: 5),
                     GestureDetector(
                       onTap: () {
                         Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SignupPage()),
-                            (route) => false);
+                          context,
+                          MaterialPageRoute(builder: (context) => SignupPage()),
+                          (route) => false,
+                        );
                       },
                       child: Text(
                         "Sign Up",

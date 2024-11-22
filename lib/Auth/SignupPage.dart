@@ -1,9 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:fitness_app/Auth/loginPage.dart';
+import 'package:fitness_app/DB/Database.dart';
 import 'package:fitness_app/Screens/homePage.dart';
+import 'package:sqflite/sqflite.dart';
 import '../Constant/form_container_widget.dart';
 import 'package:flutter/material.dart';
+// Import your SqlDb class
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -17,6 +18,48 @@ class _SignUpPageState extends State<SignupPage>
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+
+  SqlDb sqlDb = SqlDb(); // Create an instance of SqlDb
+
+  Future<void> _signUp() async {
+    String username = _usernameController.text.trim();
+    String email = _emailController.text.trim();
+    String password = _passwordController.text.trim();
+
+    if (username.isEmpty || email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Please fill in all fields"),
+        backgroundColor: Colors.red,
+      ));
+      return;
+    }
+
+    // Insert user data into the database
+    int response = await sqlDb.insertData('''
+      INSERT INTO User (user_name, eamil, password) 
+      VALUES ("$username", "$email", "$password")
+    ''');
+
+    if (response > 0) {
+      // Success
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Sign-up successful!"),
+        backgroundColor: Colors.green,
+      ));
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Loginpage()),
+        (route) => false,
+      );
+    } else {
+      // Failure
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Error signing up. Please try again."),
+        backgroundColor: Colors.red,
+      ));
+    }
+  }
 
   late AnimationController _controller;
   late Animation<Alignment> _topAlignmentAnimation;
@@ -156,13 +199,7 @@ class _SignUpPageState extends State<SignupPage>
                   height: 30,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => Homepage()),
-                      (route) => false,
-                    );
-                  },
+                  onTap: _signUp,
                   child: Container(
                     width: double.infinity,
                     height: 45,
