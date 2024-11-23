@@ -34,23 +34,13 @@ class _MyWidgetState extends State<Homepage> {
     return Scaffold(
         body: _pages[_currentIndex],
         bottomNavigationBar: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromARGB(255, 66, 126, 141), // Light blue
-                Color.fromARGB(255, 127, 238, 164) // Light greenish-blue
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
+          color: Colors.black,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 3,
               vertical: 7,
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(33),
               child: GNav(
                   onTabChange: _onItemTapped,
                   color: Colors.white,

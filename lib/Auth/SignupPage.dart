@@ -1,10 +1,8 @@
-import 'package:fitness_app/Auth/loginPage.dart';
-import 'package:fitness_app/DB/Database.dart';
-import 'package:fitness_app/Screens/homePage.dart';
-import 'package:sqflite/sqflite.dart';
-import '../Constant/form_container_widget.dart';
 import 'package:flutter/material.dart';
-// Import your SqlDb class
+import 'package:fitness_app/DB/Database.dart';
+import 'package:fitness_app/Auth/loginPage.dart';
+import 'package:fitness_app/Constant/form_container_widget.dart';
+import 'GradientAnimation.dart'; 
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -13,13 +11,25 @@ class SignupPage extends StatefulWidget {
   State<SignupPage> createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignupPage>
-    with SingleTickerProviderStateMixin {
+class _SignUpPageState extends State<SignupPage> with SingleTickerProviderStateMixin {
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  SqlDb sqlDb = SqlDb(); 
 
-  SqlDb sqlDb = SqlDb(); // Create an instance of SqlDb
+  late GradientAnimation _gradientAnimation; 
+
+  @override
+  void initState() {
+    super.initState();
+    _gradientAnimation = GradientAnimation(vsync: this); 
+  }
+
+  @override
+  void dispose() {
+    _gradientAnimation.dispose(); 
+    super.dispose();
+  }
 
   Future<void> _signUp() async {
     String username = _usernameController.text.trim();
@@ -34,14 +44,12 @@ class _SignUpPageState extends State<SignupPage>
       return;
     }
 
-    // Insert user data into the database
     int response = await sqlDb.insertData('''
       INSERT INTO User (user_name, eamil, password) 
       VALUES ("$username", "$email", "$password")
     ''');
 
     if (response > 0) {
-      // Success
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Sign-up successful!"),
         backgroundColor: Colors.green,
@@ -53,98 +61,18 @@ class _SignUpPageState extends State<SignupPage>
         (route) => false,
       );
     } else {
-      // Failure
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Error signing up. Please try again."),
+        content: Text("Sign-up failed, try again."),
         backgroundColor: Colors.red,
       ));
     }
-  }
-
-  late AnimationController _controller;
-  late Animation<Alignment> _topAlignmentAnimation;
-  late Animation<Alignment> _bottomAlignmentAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 40));
-
-    _topAlignmentAnimation = TweenSequence<Alignment>(
-      [
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-              begin: Alignment.topLeft, end: Alignment.topRight),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-              begin: Alignment.topRight, end: Alignment.bottomRight),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-              begin: Alignment.bottomRight, end: Alignment.bottomLeft),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-              begin: Alignment.bottomLeft, end: Alignment.topLeft),
-          weight: 1,
-        ),
-      ],
-    ).animate(_controller);
-
-    _bottomAlignmentAnimation = TweenSequence<Alignment>(
-      [
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-              begin: Alignment.bottomRight, end: Alignment.bottomLeft),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-              begin: Alignment.bottomLeft, end: Alignment.topLeft),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-              begin: Alignment.topLeft, end: Alignment.topRight),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-              begin: Alignment.topRight, end: Alignment.bottomRight),
-          weight: 1,
-        ),
-      ],
-    ).animate(_controller);
-
-    _controller.repeat();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _navigateToLoginPage() {
-    _controller.stop();
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Loginpage()),
-    ).then((_) {
-      _controller.repeat();
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnimatedBuilder(
-        animation: _controller,
+        animation: _gradientAnimation.controller,
         builder: (context, _) => Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -155,8 +83,8 @@ class _SignUpPageState extends State<SignupPage>
                 Color.fromARGB(255, 75, 136, 151),
                 Color.fromARGB(255, 127, 238, 164)
               ],
-              begin: _topAlignmentAnimation.value,
-              end: _bottomAlignmentAnimation.value,
+              begin: _gradientAnimation.topAlignmentAnimation.value,
+              end: _gradientAnimation.bottomAlignmentAnimation.value,
             ),
           ),
           child: Padding(
@@ -167,37 +95,30 @@ class _SignUpPageState extends State<SignupPage>
                 Text(
                   "Sign Up",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 50,
-                      color: Colors.white),
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 50,
+                  ),
                 ),
-                SizedBox(
-                  height: 30,
-                ),
+                SizedBox(height: 50),
                 FormContainerWidget(
                   controller: _usernameController,
                   hintText: "Username",
                   isPasswordField: false,
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 20),
                 FormContainerWidget(
                   controller: _emailController,
                   hintText: "Email",
                   isPasswordField: false,
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 20),
                 FormContainerWidget(
                   controller: _passwordController,
                   hintText: "Password",
                   isPasswordField: true,
                 ),
-                SizedBox(
-                  height: 30,
-                ),
+                SizedBox(height: 25),
                 GestureDetector(
                   onTap: _signUp,
                   child: Container(
@@ -211,16 +132,15 @@ class _SignUpPageState extends State<SignupPage>
                       child: Text(
                         "Sign Up",
                         style: TextStyle(
-                            color: const Color.fromARGB(255, 255, 255, 255),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17),
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                        ),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -231,16 +151,14 @@ class _SignUpPageState extends State<SignupPage>
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
-                    SizedBox(
-                      width: 5,
-                    ),
+                    SizedBox(width: 5),
                     GestureDetector(
                       onTap: () {
                         Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Loginpage()),
-                            (route) => false);
+                          context,
+                          MaterialPageRoute(builder: (context) => Loginpage()),
+                          (route) => false,
+                        );
                       },
                       child: Text(
                         "Login",

@@ -1,7 +1,14 @@
-import 'package:fitness_app/Auth/loginPage.dart';
 import 'package:flutter/material.dart';
+import 'package:fitness_app/Auth/loginPage.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart'; 
 
 void main() {
+ 
+  sqfliteFfiInit();
+
+  databaseFactory = databaseFactoryFfi;
+
   runApp(const MyApp());
 }
 

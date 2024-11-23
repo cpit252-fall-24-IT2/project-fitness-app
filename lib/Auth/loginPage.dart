@@ -1,8 +1,9 @@
-import 'package:fitness_app/DB/Database.dart';
 import 'package:flutter/material.dart';
+import 'package:fitness_app/DB/Database.dart';
+import 'package:fitness_app/Screens/homePage.dart';
 import 'package:fitness_app/Auth/SignupPage.dart';
 import 'package:fitness_app/Constant/form_container_widget.dart';
-import 'package:fitness_app/Screens/homePage.dart';
+import 'GradientAnimation.dart'; 
 
 class Loginpage extends StatefulWidget {
   const Loginpage({super.key});
@@ -11,13 +12,25 @@ class Loginpage extends StatefulWidget {
   State<Loginpage> createState() => _MyWidgetState();
 }
 
-class _MyWidgetState extends State<Loginpage>
-    with SingleTickerProviderStateMixin {
+class _MyWidgetState extends State<Loginpage> with SingleTickerProviderStateMixin {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-
-  SqlDb sqlDb = SqlDb(); // Create an instance of SqlDb
   String? _errorMessage;
+  SqlDb sqlDb = SqlDb(); 
+  late GradientAnimation _gradientAnimation; 
+
+  @override
+  void initState() {
+    super.initState();
+    _gradientAnimation = GradientAnimation(vsync: this); 
+  }
+
+  @override
+  void dispose() {
+    _gradientAnimation.dispose(); 
+    super.dispose();
+  }
+
   Future<void> _handleLogin() async {
     String email = _emailController.text.trim();
     String password = _passwordController.text.trim();
@@ -29,96 +42,28 @@ class _MyWidgetState extends State<Loginpage>
       return;
     }
 
-    // Check if email and password match
     List<Map> response = await sqlDb.readData('''
       SELECT * FROM User WHERE eamil = "$email" AND password = "$password"
     ''');
 
     if (response.isNotEmpty) {
-      // Success: Navigate to homepage
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => Homepage()),
         (route) => false,
       );
     } else {
-      // Failure: Show error message
       setState(() {
         _errorMessage = "Invalid email or password";
       });
     }
   }
 
-  late AnimationController _controller;
-  late Animation<Alignment> _topAlignmentAnimation;
-  late Animation<Alignment> _bottomAlignmentAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 40));
-
-    _topAlignmentAnimation = TweenSequence<Alignment>([
-      TweenSequenceItem<Alignment>(
-        tween:
-            Tween<Alignment>(begin: Alignment.topLeft, end: Alignment.topRight),
-        weight: 1,
-      ),
-      TweenSequenceItem<Alignment>(
-        tween: Tween<Alignment>(
-            begin: Alignment.topRight, end: Alignment.bottomRight),
-        weight: 1,
-      ),
-      TweenSequenceItem<Alignment>(
-        tween: Tween<Alignment>(
-            begin: Alignment.bottomRight, end: Alignment.bottomLeft),
-        weight: 1,
-      ),
-      TweenSequenceItem<Alignment>(
-        tween: Tween<Alignment>(
-            begin: Alignment.bottomLeft, end: Alignment.topLeft),
-        weight: 1,
-      ),
-    ]).animate(_controller);
-
-    _bottomAlignmentAnimation = TweenSequence<Alignment>([
-      TweenSequenceItem<Alignment>(
-        tween: Tween<Alignment>(
-            begin: Alignment.bottomRight, end: Alignment.bottomLeft),
-        weight: 1,
-      ),
-      TweenSequenceItem<Alignment>(
-        tween: Tween<Alignment>(
-            begin: Alignment.bottomLeft, end: Alignment.topLeft),
-        weight: 1,
-      ),
-      TweenSequenceItem<Alignment>(
-        tween:
-            Tween<Alignment>(begin: Alignment.topLeft, end: Alignment.topRight),
-        weight: 1,
-      ),
-      TweenSequenceItem<Alignment>(
-        tween: Tween<Alignment>(
-            begin: Alignment.topRight, end: Alignment.bottomRight),
-        weight: 1,
-      ),
-    ]).animate(_controller);
-
-    _controller.repeat();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnimatedBuilder(
-        animation: _controller,
+        animation: _gradientAnimation.controller,
         builder: (context, _) => Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -126,11 +71,11 @@ class _MyWidgetState extends State<Loginpage>
                 Color.fromARGB(255, 0, 0, 0),
                 Color.fromARGB(255, 9, 20, 22),
                 Color.fromARGB(255, 40, 80, 90),
-                Color.fromARGB(255, 75, 136, 151), // Light blue
-                Color.fromARGB(255, 127, 238, 164) // Light greenish-blue
+                Color.fromARGB(255, 75, 136, 151),
+                Color.fromARGB(255, 127, 238, 164)
               ],
-              begin: _topAlignmentAnimation.value,
-              end: _bottomAlignmentAnimation.value,
+              begin: _gradientAnimation.topAlignmentAnimation.value,
+              end: _gradientAnimation.bottomAlignmentAnimation.value,
             ),
           ),
           child: Padding(
