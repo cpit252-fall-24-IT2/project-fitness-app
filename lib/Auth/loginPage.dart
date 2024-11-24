@@ -1,3 +1,4 @@
+import 'package:fitness_app/Constant/Varibles.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_app/DB/Database.dart';
 import 'package:fitness_app/Screens/homePage.dart';
@@ -12,11 +13,7 @@ class Loginpage extends StatefulWidget {
   State<Loginpage> createState() => _MyWidgetState();
 }
 
-class _MyWidgetState extends State<Loginpage> with SingleTickerProviderStateMixin {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  String? _errorMessage;
-  SqlDb sqlDb = SqlDb(); 
+class _MyWidgetState extends State<Loginpage> with SingleTickerProviderStateMixin { 
   late GradientAnimation _gradientAnimation; 
 
   @override
@@ -32,21 +29,22 @@ class _MyWidgetState extends State<Loginpage> with SingleTickerProviderStateMixi
   }
 
   Future<void> _handleLogin() async {
-    String email = _emailController.text.trim();
-    String password = _passwordController.text.trim();
+    String email = AppData().emailController.text.trim();
+    String password = AppData().passwordController.text.trim();
 
     if (email.isEmpty || password.isEmpty) {
       setState(() {
-        _errorMessage = "Please fill in all fields";
+        AppData().errorMessage = "Please fill in all fields";
       });
       return;
     }
 
-    List<Map> response = await sqlDb.readData('''
+    List<Map> response = await  AppData().sqlDb.readData('''
       SELECT * FROM User WHERE eamil = "$email" AND password = "$password"
     ''');
 
     if (response.isNotEmpty) {
+      await _getUserName();
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => Homepage()),
@@ -54,10 +52,28 @@ class _MyWidgetState extends State<Loginpage> with SingleTickerProviderStateMixi
       );
     } else {
       setState(() {
-        _errorMessage = "Invalid email or password";
+         AppData().errorMessage = "Invalid email or password";
       });
     }
   }
+  Future<void> _getUserName() async {
+  String email = AppData().emailController.text.trim();
+  String password = AppData().passwordController.text.trim();
+
+ 
+  List<Map> response = await AppData().sqlDb.readData('''
+    SELECT * FROM User WHERE eamil = "$email" AND password = "$password"
+  ''');
+
+  
+  if (response.isNotEmpty) {
+   
+    AppData().userName = response[0]['user_name']; 
+  } else {
+    
+    AppData().userName = "Guest"; 
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -93,20 +109,20 @@ class _MyWidgetState extends State<Loginpage> with SingleTickerProviderStateMixi
                 ),
                 SizedBox(height: 50),
                 FormContainerWidget(
-                  controller: _emailController,
+                  controller:  AppData().emailController,
                   hintText: "Email",
                   isPasswordField: false,
                 ),
                 SizedBox(height: 20),
                 FormContainerWidget(
-                  controller: _passwordController,
+                  controller:  AppData().passwordController,
                   hintText: "Password",
                   isPasswordField: true,
                 ),
                 SizedBox(height: 10),
-                if (_errorMessage != null)
+                if ( AppData().errorMessage != null)
                   Text(
-                    _errorMessage!,
+                     AppData().errorMessage!,
                     style: TextStyle(color: Colors.red, fontSize: 14),
                   ),
                 SizedBox(height: 25),

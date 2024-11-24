@@ -1,9 +1,10 @@
+import 'package:fitness_app/Constant/Varibles.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_app/Auth/LoginPage.dart';
+import 'package:fitness_app/DB/Database.dart';
 
 class Profilescreen extends StatefulWidget {
   const Profilescreen({super.key});
-
   @override
   State<Profilescreen> createState() => _ProfilescreenState();
 }
@@ -21,7 +22,6 @@ class _ProfilescreenState extends State<Profilescreen> {
           ),
         ),
         backgroundColor: Colors.transparent,
-        elevation: 0,
         centerTitle: true,
         actions: [
           IconButton(
@@ -30,25 +30,41 @@ class _ProfilescreenState extends State<Profilescreen> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: const Text('Logout Confirmation'),
-                    content: const Text('Are you sure you want to log out?'),
+                    content: const Text(
+                      'Are you sure you want to log out?',
+                      style:
+                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    ),
                     actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('Cancel'),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Loginpage()),
-                            (route) => false,
-                          );
-                        },
-                        child: const Text('Logout'),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text(
+                              'Cancel',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 44, 80, 106)),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Loginpage()),
+                                (route) => false,
+                              );
+                            },
+                            child: const Text(
+                              'Logout',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 44, 80, 106)),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   );
@@ -90,10 +106,10 @@ class _ProfilescreenState extends State<Profilescreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
 
               // Sections for options
-              _buildSectionHeader('Mimi Headline'),
+              _buildSectionHeader('The king ${AppData().userName} '),
               _buildListTile('My Workout', Icons.fitness_center),
               _buildListTile('Customer Service', Icons.support_agent),
               _buildListTile('Payment Methods', Icons.payment),
@@ -126,7 +142,7 @@ class _ProfilescreenState extends State<Profilescreen> {
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: Color.fromARGB(255, 255, 255, 255),
           ),
         ),
       ),
