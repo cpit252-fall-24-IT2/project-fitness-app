@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 import 'package:fitness_app/DB/Database.dart';
 import 'package:fitness_app/Auth/loginPage.dart';
@@ -12,6 +14,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignupPage> with SingleTickerProviderStateMixin {
+  //fix this.
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
