@@ -8,7 +8,7 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
-  List foods = ["Caesar", "Grilled_chicken", "Avocado"];
+  List foods = ["Grilled_chicken", "Avocado", "Caesar"];
 
   List<Color> bgColors = [
     Color.fromARGB(255, 0, 0, 0),
@@ -83,8 +83,8 @@ class _HomescreenState extends State<Homescreen> {
                       children: [
                         Image.asset(
                           "assets/${foods[index]}.jpg",
-                          width: 400,
-                          height: 400,
+                          width: 200,
+                          height: 200,
                         ),
                         Text(
                           foods[index],
