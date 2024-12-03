@@ -8,6 +8,14 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
+  List foods = ["Caesar", "Grilled_chicken", "Avocado"];
+
+  List<Color> bgColors = [
+    Color.fromARGB(255, 0, 0, 0),
+    Color.fromARGB(255, 0, 0, 0),
+    Color.fromARGB(255, 0, 0, 0),
+    Color.fromARGB(255, 0, 0, 0),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,11 +60,44 @@ class _HomescreenState extends State<Homescreen> {
                 ),
               ),
             ),
-
-            Expanded(
-              child: Center(
-                child: Text("Workout Suggestions Coming Soon!",
-                    style: TextStyle(fontSize: 18, color: Colors.grey)),
+            SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              height: 250,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: foods.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: 200,
+                    margin: EdgeInsets.only(left: 10),
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 35, 32, 32),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Image.asset(
+                          "assets/${foods[index]}.jpg",
+                          width: 400,
+                          height: 400,
+                        ),
+                        Text(
+                          foods[index],
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                },
               ),
             ),
           ],

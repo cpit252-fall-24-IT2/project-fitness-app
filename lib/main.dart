@@ -4,9 +4,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
-
-  sqfliteFfiInit();
-  databaseFactory = databaseFactoryFfi;
+  // sqfliteFfiInit();
+  // databaseFactory = databaseFactoryFfi;
 
   runApp(const MyApp());
 }

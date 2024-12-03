@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:fitness_app/Widget/GradientAnimation.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_app/DB/Database.dart';
 import 'package:fitness_app/Auth/loginPage.dart';
 import 'package:fitness_app/Constant/form_container_widget.dart';
-import 'GradientAnimation.dart'; 
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -13,24 +13,25 @@ class SignupPage extends StatefulWidget {
   State<SignupPage> createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignupPage> with SingleTickerProviderStateMixin {
+class _SignUpPageState extends State<SignupPage>
+    with SingleTickerProviderStateMixin {
   //fix this.
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-  SqlDb sqlDb = SqlDb(); 
+  SqlDb sqlDb = SqlDb();
 
-  late GradientAnimation _gradientAnimation; 
+  late GradientAnimation _gradientAnimation;
 
   @override
   void initState() {
     super.initState();
-    _gradientAnimation = GradientAnimation(vsync: this); 
+    _gradientAnimation = GradientAnimation(vsync: this);
   }
 
   @override
   void dispose() {
-    _gradientAnimation.dispose(); 
+    _gradientAnimation.dispose();
     super.dispose();
   }
 
