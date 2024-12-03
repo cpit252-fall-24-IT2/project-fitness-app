@@ -32,7 +32,8 @@ class SchedulePage extends StatelessWidget {
                         fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   ...dayPlan.exercises.map((exercise) {
-                    return Text("- ${exercise.name}: ${exercise.duration}");
+                    return Text(
+                        "- ${exercise.name}:  ${exercise.sets} sets ${exercise.duration}");
                   }).toList(),
                 ],
               );

@@ -33,7 +33,7 @@ class _GoalPageState extends State<Goalscreen> {
     "Improve overall fitness"
   ];
   final List<String> _fitnessLevels = ["Beginner", "Intermediate", "Advanced"];
-  // Api Request
+
   Future<void> createWorkoutPlan() async {
     final url =
         'https://ai-workout-planner-exercise-fitness-nutrition-guide.p.rapidapi.com/customWorkoutPlan?noqueue=1';
@@ -105,96 +105,128 @@ class _GoalPageState extends State<Goalscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text("Set Your Goal"),
+        backgroundColor: Colors.transparent,
+        centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            // Dropdown for goal selection
-            DropdownButtonFormField<String>(
-              decoration: const InputDecoration(labelText: "Select Goal"),
-              value: _selectedGoal,
-              items: _goals
-                  .map((goal) =>
-                      DropdownMenuItem(value: goal, child: Text(goal)))
-                  .toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedGoal = value;
-                });
-              },
-            ),
-
-            // Dropdown for fitness level selection
-            DropdownButtonFormField<String>(
-              decoration:
-                  const InputDecoration(labelText: "Select Fitness Level"),
-              value: _selectedFitnessLevel,
-              items: _fitnessLevels
-                  .map((level) =>
-                      DropdownMenuItem(value: level, child: Text(level)))
-                  .toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedFitnessLevel = value;
-                });
-              },
-            ),
-
-            TextField(
-              controller: _preferencesController,
-              decoration: const InputDecoration(
-                  labelText: "Preferences (comma-separated)"),
-            ),
-
-            TextField(
-              controller: _healthConditionsController,
-              decoration: const InputDecoration(
-                  labelText: "Health Conditions (comma-separated)"),
-            ),
-
-            TextField(
-              controller: _daysPerWeekController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: "Days per Week"),
-            ),
-
-            TextField(
-              controller: _sessionDurationController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                  labelText: "Session Duration (minutes)"),
-            ),
-
-            TextField(
-              controller: _planDurationController,
-              keyboardType: TextInputType.number,
-              decoration:
-                  const InputDecoration(labelText: "Plan Duration (weeks)"),
-            ),
-
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: createWorkoutPlan,
-              child: const Text("Create Workout Plan"),
-            ),
-
-            // Display button if schedule exists.
-            if (_hasSchedule)
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SchedulePage(workPlan: _workPlan),
-                    ),
-                  );
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB(255, 0, 0, 0),
+              Color.fromARGB(255, 9, 20, 22),
+              Color.fromARGB(255, 40, 80, 90),
+              Color.fromARGB(255, 75, 136, 151),
+              Color.fromARGB(255, 127, 238, 164),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ListView(
+            children: [
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                  labelText: "Select Goal",
+                  labelStyle: TextStyle(color: Colors.white),
+                ),
+                value: _selectedGoal,
+                items: _goals
+                    .map((goal) => DropdownMenuItem(
+                        value: goal,
+                        child:
+                            Text(goal, style: TextStyle(color: Colors.white))))
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedGoal = value;
+                  });
                 },
-                child: const Text("View Schedule"),
+                dropdownColor: Colors.black,
               ),
-          ],
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                    labelText: "Select Fitness Level",
+                    labelStyle: TextStyle(color: Colors.white)),
+                value: _selectedFitnessLevel,
+                items: _fitnessLevels
+                    .map((level) => DropdownMenuItem(
+                          value: level,
+                          child: Text(
+                            level,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedFitnessLevel = value;
+                  });
+                },
+                dropdownColor: Colors.black,
+              ),
+              TextField(
+                controller: _preferencesController,
+                style: TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
+                  labelText: "Preferences (comma-separated)",
+                  labelStyle: TextStyle(color: Colors.white),
+                ),
+              ),
+              TextField(
+                controller: _healthConditionsController,
+                style: TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
+                    labelText: "Health Conditions (comma-separated)",
+                    labelStyle: TextStyle(color: Colors.white)),
+              ),
+              TextField(
+                controller: _daysPerWeekController,
+                style: TextStyle(color: Colors.white),
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                    labelText: "Days per Week",
+                    labelStyle: TextStyle(color: Colors.white)),
+              ),
+              TextField(
+                controller: _sessionDurationController,
+                style: TextStyle(color: Colors.white),
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                    labelText: "Session Duration (minutes)",
+                    labelStyle: TextStyle(color: Colors.white)),
+              ),
+              TextField(
+                controller: _planDurationController,
+                style: TextStyle(color: Colors.white),
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                    labelText: "Plan Duration (weeks)",
+                    labelStyle: TextStyle(color: Colors.white)),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: createWorkoutPlan,
+                child: const Text("Create Workout Plan"),
+              ),
+              if (_hasSchedule)
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SchedulePage(workPlan: _workPlan),
+                      ),
+                    );
+                  },
+                  child: const Text("View Schedule"),
+                ),
+            ],
+          ),
         ),
       ),
     );
