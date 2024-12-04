@@ -1,5 +1,6 @@
-Fitness App
-Overview
+#Fitness App
+
+Overview:
 Fitness App is a Flutter-based mobile application designed to help users achieve their fitness goals. By taking user inputs like fitness level, goals, preferences, and health conditions, the app connects with an external API to generate a personalized workout plan. It also uses a local database for storing schedules to provide a seamless and consistent experience.
 
 Features:
