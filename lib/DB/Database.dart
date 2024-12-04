@@ -7,10 +7,8 @@ class SqlDb {
   Future<Database?> get db async {
     if (_db == null) {
       _db = await intialDb();
+    } 
       return _db;
-    } else {
-      return _db;
-    }
   }
 
   intialDb() async {
