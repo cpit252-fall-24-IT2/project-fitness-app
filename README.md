@@ -21,10 +21,13 @@ Clean and user-friendly interface for effortless navigation.
 How It Works
 Sign Up/Login:
 New users can register, and existing users can log in to their accounts.
+
 Input Your Details:
 Enter details like your fitness goal, fitness level, preferences, and health conditions.
+
 Get Your Plan:
 Based on your inputs, the app generates a workout plan using the external API.
+
 Access Your Schedule:
 The personalized schedule is stored locally for easy access anytime.
 
